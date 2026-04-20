@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jitpragya Tiwari — AI Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1F3A5F;
+      --rust: #B8651E;
+      --cream: #FAF8F4;
+      --warm-white: #FFFFFF;
+      --gray: #6B7280;
+      --light-gray: #F3F0EB;
+      --border: #E5E0D8;
+      --text: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rust); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(184,101,30,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(31,58,95,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      border: 1px solid var(--rust);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.25s;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--rust);
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--gray);
+      font-weight: 300;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.55s;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+      padding: 0.75rem 1.8rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--rust); transform: translateY(-1px); }
+    .btn-secondary {
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      padding: 0.75rem 1.8rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: white; transform: translateY(-1px); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.7s;
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 5rem 2rem;
+    }
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--navy);
+      margin-bottom: 2.5rem;
+      line-height: 1.2;
+    }
+
+    /* ── ABOUT ── */
+    .about { background: var(--warm-white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .about-highlight {
+      background: var(--light-gray);
+      border-left: 3px solid var(--rust);
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .about-highlight p {
+      font-size: 0.92rem;
+      color: var(--navy);
+      font-weight: 500;
+      margin: 0;
+    }
+    .about-facts { display: flex; flex-direction: column; gap: 1.2rem; }
+    .fact-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .fact-icon {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .fact-content strong {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .fact-content span {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience { background: var(--cream); }
+    .exp-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--rust);
+    }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .exp-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+    }
+    .exp-date {
+      font-size: 0.78rem;
+      color: var(--rust);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: rgba(184,101,30,0.08);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+    }
+    .exp-company {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 0.3rem;
+    }
+    .exp-client {
+      font-size: 0.82rem;
+      color: var(--rust);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: #444;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.6;
+    }
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--rust);
+      font-weight: 600;
+    }
+
+    /* ── SKILLS ── */
+    .skills { background: var(--navy); }
+    .skills .section-label { color: rgba(184,101,30,0.9); }
+    .skills .section-title { color: white; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-group {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+    .skill-group-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.3rem 0.7rem;
+      border-radius: 3px;
+      font-weight: 400;
+    }
+
+    /* ── CERTIFICATIONS ── */
+    .certifications { background: var(--warm-white); }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .cert-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem;
+      background: var(--cream);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cert-card:hover { border-color: var(--rust); transform: translateY(-2px); }
+    .cert-platform {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+    .cert-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+    .cert-year {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+
+    /* ── EDUCATION ── */
+    .education { background: var(--cream); }
+    .edu-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .edu-college { font-size: 0.9rem; color: var(--gray); margin-bottom: 0.3rem; }
+    .edu-meta { font-size: 0.82rem; color: var(--rust); font-weight: 500; }
+    .edu-cgpa {
+      text-align: center;
+      background: var(--navy);
+      color: white;
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
+      min-width: 100px;
+    }
+    .cgpa-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .cgpa-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; margin-top: 0.3rem; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--navy); text-align: center; }
+    .contact .section-label { color: rgba(184,101,30,0.9); }
+    .contact .section-title { color: white; margin-bottom: 0.8rem; }
+    .contact-sub { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; }
+    .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .contact-link:hover { background: var(--rust); border-color: var(--rust); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111827;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      nav .nav-links { display: none; }
+      .edu-card { flex-direction: column; }
+      .edu-cgpa { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Jitpragya Tiwari</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Available for AI Analyst Roles</span>
+      <h1 class="hero-name">Jitpragya<br><em>Tiwari</em></h1>
+      <p class="hero-subtitle">AI Data Analyst with 2 years delivering camera data analysis for Honda's ADAS program at KPIT Technologies. Specialized in data automation, Power BI reporting, and AI-driven workflows.</p>
+      <div class="hero-cta">
+        <a href="https://www.linkedin.com/in/jitpragya-tiwari" target="_blank" class="btn-primary">View LinkedIn</a>
+        <a href="https://github.com/jitpragya-tiwari" target="_blank" class="btn-secondary">View GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num">5/5</div>
+          <div class="stat-label">Client CSAT — Honda</div>
+        </div>
+        <div>
+          <div class="stat-num">450+</div>
+          <div class="stat-label">Images Analyzed Daily</div>
+        </div>
+        <div>
+          <div class="stat-num">22</div>
+          <div class="stat-label">Team Members Trained</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-inner">
+      <div class="section-label">About Me</div>
+      <div class="section-title">Turning raw data into<br>reliable decisions</div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I am a Data Analyst based in Pune with 2 years of experience at KPIT Technologies, working on Honda's ADAS surround camera program. My day-to-day involves validating large-scale image and video datasets, building structured reports for stakeholders, and contributing to automation tools that reduce manual effort.</p>
+          <p>I have a strong foundation in Power BI, Python, Excel, and prompt engineering with Claude. I also delivered knowledge-transfer sessions on Power BI and AI workflows to 22 team members, helping the team adopt more efficient practices.</p>
+          <div class="about-highlight">
+            <p>Maintained a perfect 5/5 CSAT rating from Honda for 24 consecutive months with 100% on-time, zero-defect delivery across all data deliverables.</p>
+          </div>
+        </div>
+        <div class="about-facts">
+          <div class="fact-card">
+            <div class="fact-icon">📍</div>
+            <div class="fact-content">
+              <strong>Location</strong>
+              <span>Pune, Maharashtra, India</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon">🎓</div>
+            <div class="fact-content">
+              <strong>Education</strong>
+              <span>B.Tech CSE — IES IPS Academy, 2023</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon">💼</div>
+            <div class="fact-content">
+              <strong>Current Role</strong>
+              <span>Associate Engineer — KPIT Technologies</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon">🌐</div>
+            <div class="fact-content">
+              <strong>Languages</strong>
+              <span>English, Hindi — Learning Japanese & German</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="experience" id="experience">
+    <div class="section-inner">
+      <div class="section-label">Work Experience</div>
+      <div class="section-title">Where I have delivered</div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Associate Engineer</div>
+          <span class="exp-date">Aug 2023 — Present</span>
+        </div>
+        <div class="exp-company">KPIT Technologies · Pune, India</div>
+        <div class="exp-client">Client: Honda · Surround Camera Data Analysis · ADAS Domain</div>
+        <ul class="exp-bullets">
+          <li>Analyzed 450+ camera images per day across perception, lane detection, object detection, and dirt-on-lens detection pipelines — outputs directly fed Honda's ADAS release validation cycle.</li>
+          <li>Contributed to a team-built automation tool (4–5 members) handling three data types — annotated image merging, video timestamp extraction, and text-to-Excel conversion — reducing manual data-entry effort team-wide.</li>
+          <li>Drove a 15–20% improvement in team productivity by eliminating repetitive Excel preparation tasks, freeing analyst bandwidth for higher-value data review.</li>
+          <li>Delivered 3 knowledge-transfer sessions on Power BI and Prompt Engineering to 22 team members, accelerating adoption of BI dashboards and AI-assisted workflows.</li>
+          <li>Maintained a 5/5 CSAT rating from Honda for 24 consecutive months with 100% on-time delivery and zero defects across all assigned data deliverables.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <div class="section-inner">
+      <div class="section-label">Technical Skills</div>
+      <div class="section-title">Tools & Technologies</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-title">Languages</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Data & BI</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Power BI</span>
+            <span class="skill-tag">Excel</span>
+            <span class="skill-tag">Data Cleaning</span>
+            <span class="skill-tag">Data Validation</span>
+            <span class="skill-tag">KPI Reporting</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Domain</div>
+          <div class="skill-tags">
+            <span class="skill-tag">ADAS</span>
+            <span class="skill-tag">Image Annotation</span>
+            <span class="skill-tag">Object Detection</span>
+            <span class="skill-tag">Video Labeling</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">AI & Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Prompt Engineering</span>
+            <span class="skill-tag">Claude</span>
+            <span class="skill-tag">AI Workflows</span>
+            <span class="skill-tag">Jupyter</span>
+            <span class="skill-tag">VS Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="certifications">
+    <div class="section-inner">
+      <div class="section-label">Certifications</div>
+      <div class="section-title">Continuous Learning</div>
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-platform">Udemy · 2025</div>
+          <div class="cert-name">AI-Powered Data Analytics Mastery</div>
+          <div class="cert-year">AI Tools & Vibe Coding</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-platform">Udemy · 2026</div>
+          <div class="cert-name">Prompt Engineering for AI Bootcamp</div>
+          <div class="cert-year">Complete 2026 Edition</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-platform">Udemy · 2025</div>
+          <div class="cert-name">Microsoft Power BI Desktop for Business Intelligence</div>
+          <div class="cert-year">BI Reporting & Dashboards</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-platform">Udemy · 2025</div>
+          <div class="cert-name">AI & Machine Learning for Business</div>
+          <div class="cert-year">Business Applications of AI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="education">
+    <div class="section-inner">
+      <div class="section-label">Education</div>
+      <div class="section-title">Academic Background</div>
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">Bachelor of Technology — Computer Science</div>
+          <div class="edu-college">IES IPS Academy, Indore · Madhya Pradesh, India</div>
+          <div class="edu-meta">2019 — 2023</div>
+        </div>
+        <div class="edu-cgpa">
+          <div class="cgpa-num">8.54</div>
+          <div class="cgpa-label">CGPA / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-inner">
+      <div class="section-label">Get In Touch</div>
+      <div class="section-title">Open to AI Analyst Roles</div>
+      <p class="contact-sub">Currently based in Pune. Open to roles in Pune, Bangalore, Mumbai, Hyderabad, and Remote.</p>
+      <div class="contact-links">
+        <a href="mailto:tjitpragya@gmail.com" class="contact-link">✉ tjitpragya@gmail.com</a>
+        <a href="https://www.linkedin.com/in/jitpragya-tiwari" target="_blank" class="contact-link">in LinkedIn</a>
+        <a href="https://github.com/jitpragya-tiwari" target="_blank" class="contact-link">⌥ GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Jitpragya Tiwari · Built with GitHub Pages
+  </footer>
+
+</body>
+</html>
